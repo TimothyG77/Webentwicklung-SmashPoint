@@ -18,7 +18,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 </head>
 <body>
-    <?php include '/header.php';?>
+    <?php include '../header.php';?>
     
 </body>
 </html>
