@@ -35,7 +35,7 @@ Dieses Projekt ist ein einfacher **Webshop**, der es Nutzern ermöglicht, Produk
 
 ## 🔧 Installation & Einrichtung  
 
-### **1️⃣ Voraussetzungen**  
+### **Voraussetzungen**  
 Bevor du das Projekt startest, stelle sicher, dass folgende Programme installiert sind:  
 - [XAMPP] (oder ein anderer Apache Server mit PHP & MySQL)  
 - [Git]
