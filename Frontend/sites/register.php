@@ -14,13 +14,42 @@ session_start();
     
 </head>
 <body>
+<?php include('header.php'); ?>
 
 <!-- Registrierungsformular -->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
+             <!-- Display success or error messages -->
+            <?php 
+            if (isset($_GET['success']) && $_GET['success'] == 1) {
+                echo '<div class="alert alert-success" role="alert">';
+                echo 'Registration was successful!';
+                echo '</div>';
+            }
+
+            if (isset($_GET['error'])) {
+                $error_message = '';
+                switch ($_GET['error']) {
+                    case 'password_error':
+                        $error_message = 'Password is incorrect. Try again.';
+                        break;
+                    case 'email_error':
+                        $error_message = 'Please enter a valid email address.';
+                        break;
+                    case 'password_symbols_error':
+                        $error_message = 'The password must be at least 8 characters long, contain at least one number, and one special character.';
+                        break;
+                    case 'user_exists_error':
+                        $error_message = 'The username is already taken. Please choose a different one.';
+                        break;
+            }
+            echo '<div class="alert alert-danger" role="alert">' . $error_message . '</div>';
+    }
+    ?>
+
             <h2 class="text-center">Registrierung</h2>
-            <form action="register.php" method="POST" class="needs-validation" novalidate>
+            <form action="../../Backend/logic/register-form.php" method="POST">
                 
                 <!-- Anrede -->
                 <div class="mb-3">
@@ -73,6 +102,7 @@ session_start();
                 <div class="mb-3">
                     <label for="email" class="form-label">E-Mail-Adresse</label>
                     <input type="email" class="form-control" id="email" name="email" required>
+                    <div id="email-feedback" class="form-text text-danger"></div>
                     <div class="invalid-feedback">Bitte geben Sie eine gültige E-Mail-Adresse ein.</div>
                 </div>
 
@@ -80,7 +110,8 @@ session_start();
                 <div class="mb-3">
                     <label for="benutzername" class="form-label">Benutzername</label>
                     <input type="text" class="form-control" id="benutzername" name="benutzername" required>
-                    <div class="invalid-feedback">Bitte geben Sie einen Benutzernamen ein.</div>
+                    <div id="username-check" class="form-text text-danger"></div>
+                    <div class="invalid-feedback">Bitte geben Sie einen anderen Benutzernamen ein.</div>
                 </div>
 
                 <!-- Passwort -->
@@ -93,13 +124,15 @@ session_start();
                     <div class="invalid-feedback">Bitte geben Sie ein Passwort ein.</div>
                 </div>
 
-                <!-- Zahlungsinformationen 
+                <!-- Passwort bestätigen -->
                 <div class="mb-3">
-                    <label for="zahlung" class="form-label">Zahlungsinformationen</label>
-                    <input type="text" class="form-control" id="zahlung" name="zahlung" required>
-                    <div class="invalid-feedback">Bitte geben Sie Ihre Zahlungsinformationen ein.</div>
+                    <label for="confirm_password" class="form-label">Passwort bestätigen</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">👁</button>
+                    </div>
+                    <div class="invalid-feedback">Bitte bestätigen Sie Ihr Passwort.</div>
                 </div>
-                -->
 
                 <!-- Submit-Button -->
                 <button type="submit" class="btn btn-primary w-100">Registrieren</button>
@@ -107,6 +140,7 @@ session_start();
         </div>
     </div>
 </div>
-<script src="Frontend/js/register.js"></script>
+<?php include('footer.php'); ?>
+<script src="../js/register.js"></script>
 </body>
 </html>

@@ -37,7 +37,9 @@ if (session_status() == PHP_SESSION_NONE) {
                 🛒 Warenkorb
                 <span class="badge bg-danger" id="cart-count">0</span>
             </a>
-            <a href="profile.php" class="btn btn-outline-dark">👤 Profil</a>
+            <a href="register.php" class="btn btn-outline-dark">
+                👤 Profil
+            </a>
         </div>
     </div>
 </nav>
