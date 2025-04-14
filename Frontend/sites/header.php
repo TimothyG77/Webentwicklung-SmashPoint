@@ -15,7 +15,6 @@ if (session_status() == PHP_SESSION_NONE) {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../res/css/style.css"> 
-
 </head>
 <body>
 
@@ -25,24 +24,44 @@ if (session_status() == PHP_SESSION_NONE) {
         <a class="navbar-brand" href="index.php">
             <img src="../res/img/SmashPointLogo.png" alt="Webshop Logo" width="120">
         </a>
-        
+
         <form class="d-flex mx-auto" action="search.php" method="GET">
             <input class="form-control me-2" type="search" name="query" placeholder="Produkte suchen..." aria-label="Search">
             <button class="btn btn-outline-primary" type="submit">Suchen</button>
         </form>
 
-        
-        <div class="d-flex">
-            <a href="cart.php" class="btn btn-outline-dark me-2">
-                🛒 Warenkorb
-                <span class="badge bg-danger" id="cart-count">0</span>
-            </a>
-            <a href="register.php" class="btn btn-outline-dark">
-                👤 Profil
-            </a>
-        </div>
+        <ul class="navbar-nav flex-row">
+            <li class="nav-item me-2">
+                <a href="index.php" class="btn btn-outline-dark">Home</a>
+            </li>
+            <li class="nav-item me-2">
+                <a href="products.php" class="btn btn-outline-dark">Produkte</a>
+            </li>
+            <li class="nav-item me-2">
+                <a href="cart.php" class="btn btn-outline-dark">
+                    🛒 Warenkorb
+                    <span class="badge bg-danger" id="cart-count">0</span>
+                </a>
+            </li>
+            <li class="nav-item me-2">
+                <?php if (isset($_SESSION['user'])): ?>
+                    <a href="profile.php" class="btn btn-outline-dark">👤 Mein Konto</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-outline-dark">👤 Login</a>
+                <?php endif; ?>
+            </li>
+        </ul>
     </div>
 </nav>
+
+<script src="../js/cart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const total = cart.reduce((sum, p) => sum + (p.qty || 1), 0);
+        document.getElementById("cart-count").textContent = total;
+});
+</script>
 
 </body>
 </html>

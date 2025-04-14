@@ -2,6 +2,10 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start(); 
 }
+
+require_once '../../Backend/config/dbaccess.php';
+$result = $conn->query("SELECT product_name, price, product_picture FROM produkte ORDER BY ID DESC LIMIT 3");
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +23,27 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
     <?php include 'header.php' ?>
+    <?php
+    if (isset($_GET['login']) && $_GET['login'] === 'success' && isset($_SESSION['user'])) {
+    $username = htmlspecialchars($_SESSION['user']);
+    echo '<div class="alert alert-success text-center mt-4" role="alert">
+    Login war erfolgreich! Willkommen zurück, <strong>' . $username . '!</strong>
+    </div>';
+    }
+    ?>
+
+    <?php
+    while ($row = $result->fetch_assoc()) {
+        echo "<div class='card'>";
+        echo "<img src='../../Backend/{$row['product_picture']}' class='card-img-top'>";
+        echo "<div class='card-body'>";
+        echo "<h5 class='card-title'>{$row['product_name']}</h5>";
+        echo "<p class='card-text'><strong>{$row['price']} €</strong></p>";
+        echo "</div></div>";
+    }
+    ?>
+
+
 
     <?php include 'footer.php' ?>
     
