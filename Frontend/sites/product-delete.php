@@ -49,3 +49,4 @@ $stmt->close();
     <script src="../js/product-delete.js"></script>
 </body>
 </html>
+
