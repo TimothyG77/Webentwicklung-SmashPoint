@@ -25,28 +25,32 @@ $stmt->close();
     <meta charset="UTF-8">
     <title>Produkte löschen</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../res/css/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
-<body class="container mt-5">
-    <h2 class="mb-4">Produkte löschen</h2>
+<body>
+    <?php include 'header.php' ?>
 
-    <div id="productList" class="row">
-        <?php foreach ($products as $product): ?>
-            <div class="col-md-4 mb-4" data-id="<?= $product['ID'] ?>">
-                <div class="card">
-                    <img src="../../Backend/<?= htmlspecialchars($product['product_picture']) ?>" class="card-img-top" alt="<?= htmlspecialchars($product['product_name']) ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
-                        <p class="card-text"><?= htmlspecialchars($product['product_description']) ?></p>
-                        <p class="card-text"><strong><?= number_format($product['price'], 2) ?> €</strong></p>
-                        <button class="btn btn-danger delete-product">🗑️ Löschen</button>
+    <div class="container mt-5">
+        <h2 class="mb-4">Produkte löschen</h2>
+
+        <div id="productList" class="row">
+            <?php foreach ($products as $product): ?>
+                <div class="col-md-4 mb-4" data-id="<?= $product['ID'] ?>">
+                    <div class="card h-100">
+                        <img src="../../Backend/<?= htmlspecialchars($product['product_picture']) ?>" class="card-img-top" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary"><?= htmlspecialchars($product['product_name']) ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($product['product_description']) ?></p>
+                            <p class="card-text"><strong><?= number_format($product['price'], 2, ',', '.') ?> €</strong></p>
+                            <button class="btn btn-danger mt-auto delete-product">Löschen</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <script src="../js/product-delete.js"></script>
 </body>
 </html>
-

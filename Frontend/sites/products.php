@@ -9,9 +9,11 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     <meta charset="UTF-8">
     <title>Produkte - SmashPoint</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../res/css/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
+
 <?php include('header.php'); ?>
 
 <div class="container mt-5">
@@ -38,11 +40,15 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
         <option value="Taschen">Taschen</option>
     </select>
 
-    <div id="productList" class="row" data-isadmin="<?= isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>"></div>
+    <div id="productList" class="row" data-isadmin="<?= $isAdmin ? 'true' : 'false' ?>"></div>
 
 </div>
 
 <?php include('footer.php'); ?>
+
+<!-- SCRIPTS -->
 <script src="../js/products.js"></script>
+<script src="../js/cart-utils.js"></script>
+<script src="../js/product-link.js"></script> <!-- NEU für Klick auf Bild/Name -->
 </body>
 </html>

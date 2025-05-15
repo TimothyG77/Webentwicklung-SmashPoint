@@ -1,15 +1,20 @@
+"use strict";
+
 $(document).ready(function () {
+    // API Pfad als konstante Variable definieren
+    const apiPath = "../../Backend/logic/product-upload-form.php";
+
     $("#productUploadForm").on("submit", function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
 
         $.ajax({
-            url: "../../Backend/logic/product-upload-form.php",
+            url: apiPath, // apiPath verwenden
             type: "POST",
             data: formData,
-            processData: false,
-            contentType: false,
+            processData: false, // notwendig für FormData
+            contentType: false, // notwendig für FormData
             dataType: "json",
             success: function (response) {
                 if (response.success) {

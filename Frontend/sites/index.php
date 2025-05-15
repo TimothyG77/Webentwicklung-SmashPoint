@@ -4,12 +4,16 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require_once '../../Backend/config/dbaccess.php';
-$result = $conn->query("SELECT product_name, price, product_picture FROM produkte ORDER BY ID DESC LIMIT 3");
-
+$result = $conn->query("SELECT ID, product_name, price, product_picture FROM produkte ORDER BY RAND()");
+$products = [];
+while ($row = $result->fetch_assoc()) {
+    $products[] = $row;
+}
+$chunks = array_chunk($products, 3);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,33 +23,78 @@ $result = $conn->query("SELECT product_name, price, product_picture FROM produkt
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../res/css/style.css"> 
-
 </head>
 <body>
-    <?php include 'header.php' ?>
-    <?php
-    if (isset($_GET['login']) && $_GET['login'] === 'success' && isset($_SESSION['user'])) {
+
+<?php include 'header.php'; ?>
+
+<?php
+if (isset($_GET['login']) && $_GET['login'] === 'success' && isset($_SESSION['user'])) {
     $username = htmlspecialchars($_SESSION['user']);
     echo '<div class="alert alert-success text-center mt-4" role="alert">
-    Login war erfolgreich! Willkommen zurück, <strong>' . $username . '!</strong>
+    Login war erfolgreich! Willkommen zurück, <strong>' . $username . '</strong>!
     </div>';
+}
+?>
+
+<div class="container mt-4">
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            <?php foreach ($chunks as $index => $chunk): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="row">
+                        <?php foreach ($chunk as $product): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <a href="#" class="text-decoration-none product-link" data-id="<?= $product['ID'] ?>">
+                                        <img src="../../Backend/<?= htmlspecialchars($product['product_picture']) ?>" class="card-img-top" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                                    </a>
+                                    <div class="card-body d-flex flex-column text-center">
+                                        <h5 class="card-title">
+                                            <a href="#" class="text-decoration-none text-dark product-link" data-id="<?= $product['ID'] ?>">
+                                                <?= htmlspecialchars($product['product_name']) ?>
+                                            </a>
+                                        </h5>
+                                        <p class="card-text"><strong><?= number_format($product['price'], 2, ',', '.') ?> €</strong></p>
+                                        <div class="mt-auto">
+                                            <button class="btn btn-success add-to-cart-btn" data-id="<?= $product['ID'] ?>">In den Warenkorb</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>
+
+<?php include 'footer.php'; ?>
+
+<script src="../js/cart-utils.js"></script>
+<script src="../js/product-link.js"></script>
+
+<script>
+$(document).ready(function () {
+    $(document).on("click", ".add-to-cart-btn", function () {
+        const productId = Number($(this).data("id"));
+        addToCart(productId);
+    });
+
+    if (window.isUserLoggedIn) {
+        loadCartFromDatabase(); // beim Seitenladen aus DB
+    } else {
+        updateCartCount(); // nur localStorage (Gast)
     }
-    ?>
+});
+</script>
 
-    <?php
-    while ($row = $result->fetch_assoc()) {
-        echo "<div class='card'>";
-        echo "<img src='../../Backend/{$row['product_picture']}' class='card-img-top'>";
-        echo "<div class='card-body'>";
-        echo "<h5 class='card-title'>{$row['product_name']}</h5>";
-        echo "<p class='card-text'><strong>{$row['price']} €</strong></p>";
-        echo "</div></div>";
-    }
-    ?>
-
-
-
-    <?php include 'footer.php' ?>
-    
 </body>
 </html>

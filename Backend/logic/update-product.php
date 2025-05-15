@@ -19,7 +19,7 @@ $name = $_POST['product_name'] ?? '';
 $desc = $_POST['product_description'] ?? '';
 $price = $_POST['price'] ?? 0.0;
 
-// Bild optional prüfen
+// Bild prüfen
 $newImage = $_FILES['new_image'] ?? null;
 $imagePath = null;
 

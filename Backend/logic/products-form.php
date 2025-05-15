@@ -16,6 +16,7 @@ $result = $stmt->get_result();
 
 $products = [];
 while ($row = $result->fetch_assoc()) {
+    $row['price'] = floatval($row['price']); 
     $products[] = $row;
 }
 

@@ -1,0 +1,204 @@
+/* === Allgemein === */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+body > .container,
+body > main {
+    flex: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* === Header / Navigation === */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-brand img {
+    height: 60px;        
+    width: auto;         
+    object-fit: contain;  
+    padding: 5px 0; 
+}
+
+.navbar-nav .btn {
+    margin-left: 0.5rem;
+    white-space: nowrap;
+}
+
+/* === Footer === */
+footer {
+    background-color: #212529;
+    padding: 2rem 0;
+    text-align: center;
+    color: #adb5bd;
+    margin-top: auto;
+}
+
+footer a {
+    color: #adb5bd;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+#productDetailContainer img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* === Produktkarten === */
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 250px;
+    width: 100%;
+    object-fit: contain;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: white;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0d6efd;
+}
+
+.card-text {
+    font-size: 0.95rem;
+}
+
+.card ul li::before {
+    font-weight: bold;
+}
+
+/* === Buttons === */
+.btn {
+    border-radius: 0.3rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.02);
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* === Formulare === */
+.form-control, .form-select {
+    border-radius: 0.3rem;
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+}
+
+/* === Warenkorb-Zähler Badge === */
+#cart-count {
+    font-size: 0.75rem;
+    padding: 0.25em 0.55em;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    line-height: 1;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* === Tabellen === */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table thead {
+    background-color: #212529;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* === Feedback-Meldungen === */
+.alert {
+    border-radius: 0.4rem;
+}
+
+.upload-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.upload-container {
+    width: 100%;
+    max-width: 700px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/* === Responsive Anpassungen === */
+@media (max-width: 768px) {
+    .navbar .navbar-nav {
+        flex-direction: column;
+    }
+
+    .card-img-top {
+        height: 180px;
+    }
+
+    .product-card .card-body {
+        text-align: center;
+    }
+
+    .navbar-nav .btn {
+        margin: 0.25rem 0;
+    }
+}

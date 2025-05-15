@@ -8,9 +8,8 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$userID = $_SESSION['user_id'];
-
 // Adminrolle prüfen
+$userID = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT role FROM User WHERE ID = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
@@ -23,23 +22,8 @@ if ($role !== 'admin') {
     exit;
 }
 
-// Status ändern (wenn GET-Parameter gesetzt)
-if (isset($_GET['toggle']) && isset($_GET['id'])) {
-    $toggleID = intval($_GET['id']);
-    $newStatus = $_GET['toggle'] === 'deactivate' ? 'inaktiv' : 'aktiv';
-
-    $update = $conn->prepare("UPDATE User SET status = ? WHERE ID = ?");
-    $update->bind_param("si", $newStatus, $toggleID);
-    $update->execute();
-    $update->close();
-
-    header("Location: user-overview.php");
-    exit;
-}
-
 // Alle User abrufen
 $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, status FROM User");
-
 ?>
 
 <!DOCTYPE html>
@@ -48,12 +32,17 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
     <meta charset="UTF-8">
     <title>Benutzerübersicht - SmashPoint</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../res/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 <?php include('header.php'); ?>
 
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Benutzerübersicht</h2>
+
+    <!--AJAX Feedback-Meldung -->
+    <div id="feedbackMessage" class="alert d-none text-center"></div>
 
     <table class="table table-bordered text-center">
         <thead class="table-dark">
@@ -69,7 +58,7 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
         </thead>
         <tbody>
         <?php while ($row = $result->fetch_assoc()): ?>
-            <tr class="<?= $row['status'] === 'inaktiv' ? 'table-danger' : '' ?>">
+            <tr class="user-row <?= $row['status'] === 'inaktiv' ? 'table-danger' : '' ?>" data-id="<?= $row['ID'] ?>" style="cursor: pointer;">
                 <td><?= $row['ID'] ?></td>
                 <td><?= $row['firstname'] . " " . $row['lastname'] ?></td>
                 <td><?= $row['email'] ?></td>
@@ -78,11 +67,13 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
                 <td><?= $row['status'] ?></td>
                 <td>
                     <?php if ($row['ID'] != $userID): ?>
-                        <?php if ($row['status'] === 'aktiv'): ?>
-                            <a href="?toggle=deactivate&id=<?= $row['ID'] ?>" class="btn btn-sm btn-danger">🛑 Deaktivieren</a>
-                        <?php else: ?>
-                            <a href="?toggle=activate&id=<?= $row['ID'] ?>" class="btn btn-sm btn-success">✅ Aktivieren</a>
-                        <?php endif; ?>
+                        <button 
+                            class="btn btn-sm toggle-status-btn <?= $row['status'] === 'aktiv' ? 'btn-danger' : 'btn-success' ?>"
+                            data-id="<?= $row['ID'] ?>"
+                            data-status="<?= $row['status'] ?>"
+                            onclick="event.stopPropagation();">
+                            <?= $row['status'] === 'aktiv' ? 'Deaktivieren' : 'Aktivieren' ?>
+                        </button>
                     <?php else: ?>
                         <span class="text-muted">Du</span>
                     <?php endif; ?>
@@ -90,9 +81,11 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
             </tr>
         <?php endwhile; ?>
         </tbody>
+
     </table>
 </div>
 
+<script src="../js/user-overview.js"></script>
 <?php include('footer.php'); ?>
 </body>
 </html>

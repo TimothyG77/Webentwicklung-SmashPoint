@@ -32,9 +32,12 @@ $stmt->close();
     <meta charset="UTF-8">
     <title>Produkt bearbeiten</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../res/css/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body class="container mt-5">
+<?php include 'header.php' ?>
+
 
 <h2>Produkt bearbeiten</h2>
 

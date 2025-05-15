@@ -1,11 +1,16 @@
+"use strict";
+
 $(document).ready(function () {
+    //API Pfad als konstante Variable definieren
+    const apiPath = "../../Backend/logic/update-product.php";
+
     $("#editProductForm").on("submit", function (e) {
         e.preventDefault();
 
         const form = document.getElementById("editProductForm");
         const formData = new FormData(form);
 
-        fetch("../../Backend/logic/update-product.php", {
+        fetch(apiPath, { 
             method: "POST",
             body: formData
         })

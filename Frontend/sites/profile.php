@@ -26,6 +26,7 @@ $stmt->close();
     <meta charset="UTF-8">
     <title>Mein Profil - SmashPoint</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../res/css/style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
@@ -56,22 +57,46 @@ $stmt->close();
         <button type="submit" class="btn btn-primary w-100">Änderungen speichern</button>
     </form>
 
-    <!-- AJAX Feedback -->
     <div id="update-success" class="alert alert-success d-none mt-3 text-center"></div>
     <div id="update-error" class="alert alert-danger d-none mt-3 text-center"></div>
 
     <div class="text-center mt-4">
-        <a href="logout.php" class="btn btn-outline-danger">🚪 Ausloggen</a>
+        <a href="logout.php" class="btn btn-outline-danger">Ausloggen</a>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="order-history.php" class="btn btn-outline-dark">Bestellübersicht anzeigen</a>
     </div>
 
     <?php if ($role === 'admin'): ?>
         <div class="text-center mt-3">
-            <a href="user-overview.php" class="btn btn-outline-primary">👥 Benutzerübersicht</a>
+            <a href="user-overview.php" class="btn btn-outline-primary">Benutzerübersicht</a>
         </div>
     <?php endif; ?>
 </div>
 
+<!-- Modal zur Passwortabfrage -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Passwort bestätigen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bitte gib dein aktuelles Passwort ein, um Änderungen zu speichern:</p>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Passwort" required>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="confirmSave" class="btn btn-primary">Speichern</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include('footer.php'); ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/profile.js"></script>
 </body>
 </html>

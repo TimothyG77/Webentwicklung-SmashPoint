@@ -1,8 +1,17 @@
 <?php
 session_start();
-session_unset();     // Alle Session-Variablen löschen
-session_destroy();   // Session beenden
-
-header("Location: index.php"); // Zurück zur Startseite
-exit;
+session_unset();
+session_destroy();
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        localStorage.removeItem("cart"); //leere localStorage
+        window.location.href = "index.php?logout=1";
+    </script>
+</head>
+<body></body>
+</html>
+<?php exit; ?>

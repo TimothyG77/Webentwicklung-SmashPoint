@@ -1,15 +1,18 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start(); 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 ?>
+<script>
+    window.isUserLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+</script>
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Webshop</title>
+    <title>SmashPoint</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -18,19 +21,19 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top">
     <div class="container">
-        
+
         <a class="navbar-brand" href="index.php">
             <img src="../res/img/SmashPointLogo.png" alt="Webshop Logo" width="120">
         </a>
 
-        <form class="d-flex mx-auto" action="search.php" method="GET">
-            <input class="form-control me-2" type="search" name="query" placeholder="Produkte suchen..." aria-label="Search">
-            <button class="btn btn-outline-primary" type="submit">Suchen</button>
-        </form>
+        <div class="position-relative w-50 mx-auto">
+            <input class="form-control me-2" type="search" id="productSearch" placeholder="Produkte suchen...">
+            <ul class="list-group position-absolute w-100 d-none" id="searchResults" style="z-index: 9999;"></ul>
+        </div>
 
-        <ul class="navbar-nav flex-row">
+        <ul class="navbar-nav flex-row ms-auto">
             <li class="nav-item me-2">
                 <a href="index.php" class="btn btn-outline-dark">Home</a>
             </li>
@@ -39,29 +42,31 @@ if (session_status() == PHP_SESSION_NONE) {
             </li>
             <li class="nav-item me-2">
                 <a href="cart.php" class="btn btn-outline-dark">
-                    🛒 Warenkorb
+                    Warenkorb
                     <span class="badge bg-danger" id="cart-count">0</span>
                 </a>
             </li>
             <li class="nav-item me-2">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <a href="profile.php" class="btn btn-outline-dark">👤 Mein Konto</a>
+                    <a href="profile.php" class="btn btn-outline-dark">Mein Konto</a>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-outline-dark">👤 Login</a>
+                    <a href="login.php" class="btn btn-outline-dark">Login</a>
                 <?php endif; ?>
             </li>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <li class="nav-item me-2">
+                    <a href="voucher.php" class="btn btn-outline-primary">Gutscheine verwalten</a>
+                </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
 
-<script src="../js/cart.js"></script>
+<!-- Warenkorb-Zähler -->
+<script src="../js/cart-utils.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const total = cart.reduce((sum, p) => sum + (p.qty || 1), 0);
-        document.getElementById("cart-count").textContent = total;
-});
+    document.addEventListener("DOMContentLoaded", updateCartCount);
 </script>
 
-</body>
-</html>
+<!-- Suchvorschläge -->
+<script src="../js/search-suggestions.js"></script>
