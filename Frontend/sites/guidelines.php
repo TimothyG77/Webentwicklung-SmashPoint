@@ -18,7 +18,7 @@ session_start();
 <div class="container my-5">
     <h2 class="text-center mb-5 fw-bold">Rechtliches bei SmashPoint</h2>
 
-    <!-- AGB -->
+    <!-- AGB Richtlinien -->
     <section class="card shadow-sm mb-4">
         <div class="card-body">
             <h4 class="card-title mb-3 text-primary fw-semibold">Allgemeine Geschäftsbedingungen (AGB)</h4>

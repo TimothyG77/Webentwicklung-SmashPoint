@@ -4,7 +4,7 @@ $(document).ready(function () {
     //API Pfad als Konstante definieren
     const apiPath = "../../Backend/logic/products-form.php";
 
-    // Produkte laden nach Kategorie
+    // Produkte filtern nach Kategorie
     function loadProducts(category) {
         $.ajax({
             url: apiPath + "?category=" + encodeURIComponent(category),

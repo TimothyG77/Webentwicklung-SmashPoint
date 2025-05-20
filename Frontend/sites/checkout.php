@@ -32,6 +32,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         Gesamtbetrag: <span id="checkoutTotal">0,00 €</span>
     </div>
 
+    <!--Ist ein User oder Gast, wenn Gast, dann wird else ausgeführt-->
     <?php if ($isLoggedIn): ?>
         <div class="text-end">
             <button id="placeOrderBtn" class="btn btn-success">Bestellung abschicken</button>

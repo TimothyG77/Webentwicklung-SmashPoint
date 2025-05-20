@@ -47,7 +47,7 @@ $(function () {
         }, 4000);
     }
 
-    $(document).on("click", ".user-row", function () {
+    $(document).on("click", ".user-row", function () { // Die Klick Funktion, dass man zu der Bestellübersicht jedes Benutzern kommt
         const userId = $(this).data("id");
         window.location.href = `order-delete.php?user_id=${userId}`;
     });

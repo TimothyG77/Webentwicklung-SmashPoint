@@ -8,7 +8,7 @@ if (isset($_POST['email'])) {
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
-    echo $stmt->num_rows > 0 ? "taken" : "free";
+    echo $stmt->num_rows > 0 ? "taken" : "free"; // Auch hier die Werte entweder "taken" oder "free"
     $stmt->close();
     $conn->close();
 }

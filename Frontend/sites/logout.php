@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); // Alle SESSION Daten werden gelöscht
 session_unset();
 session_destroy();
 ?>
@@ -9,7 +9,7 @@ session_destroy();
 <head>
     <script>
         localStorage.removeItem("cart"); //leere localStorage
-        window.location.href = "index.php?logout=1";
+        window.location.href = "index.php?logout=1"; // Nach Logout zur Startseite geführt
     </script>
 </head>
 <body></body>

@@ -7,13 +7,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 require_once '../../Backend/config/dbaccess.php';
 
+// Zur Sicherheit Produkt-ID Abfragen 
 $productId = $_GET['id'] ?? null;
 if (!$productId) {
     echo "Ungültige Produkt-ID.";
     exit;
 }
 
-// Produkt aus DB laden
+// Produkt aus DB laden und unten im HTML ausprinten
 $stmt = $conn->prepare("SELECT product_name, product_description, price, product_picture FROM produkte WHERE ID = ?");
 $stmt->bind_param("i", $productId);
 $stmt->execute();

@@ -5,12 +5,12 @@ require_once '../config/dbaccess.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Nicht eingeloggt.']);
-    exit;
+    exit; // Nur eingeloggte Nutzer können ihren Warenkorb abspeichern.
 }
 
 $userId = $_SESSION['user_id'];
 $data = json_decode(file_get_contents("php://input"), true);
-$cart = $data['cart'] ?? [];
+$cart = $data['cart'] ?? []; // Holt den JSON-Text aus der Anfrage und wandelt es in ein PHP-Array um.
 
 // Immer erst alte Cart-Einträge löschen
 $stmt = $conn->prepare("DELETE FROM cart_items WHERE user_id = ?");

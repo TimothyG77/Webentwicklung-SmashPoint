@@ -3,13 +3,13 @@
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const total = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
-    const badge = document.getElementById("cart-count");
+    const badge = document.getElementById("cart-count"); // Die id wird geholt vom header.php
     if (badge) badge.textContent = total;
 
-    toggleCheckoutButton(); 
+    toggleCheckoutButton(); // Prüft ob Warenkorb leer ist, damit Button versteckt wird
 }
 
-function syncCartToDatabaseIfLoggedIn() {
+function syncCartToDatabaseIfLoggedIn() { // Unterschied zu syncCartToDatabase in cart.js ist, dass es hier eine zusätzliche Login Prüfung gibt.
     if (window.isUserLoggedIn) {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -34,22 +34,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!container || !totalElement) {
         console.warn("Warenkorb-Elemente nicht gefunden – cart.js wird auf dieser Seite nicht gebraucht.");
-        updateCartCount();
+        updateCartCount(); // FAlls cart.js auf einer anderen Seite geladen wird, bricht der Code hier ab.
         return;
     }
 
     const apiPath = "../../Backend/logic/cart-form.php";
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    function renderCart(products) {
-        let total = 0;
+    function renderCart(products) { // Zeigt alle Artikel im Warenkorb visuelle im HTML an
+        let total = 0; //Variable products kommt von cart-from.php
         container.innerHTML = "";
 
         products.forEach(product => {
             const cartItem = cart.find(c => c.id === product.id);
+            //Wenn quantity > 0, dann verwende qty aus Datenbank, wenn false weil leer oder ungültig, verwende 1 als Fallback
             const qty = cartItem && Number(cartItem.qty) > 0 ? Number(cartItem.qty) : 1;
+            // Zwischensumme berechnen
             const subtotal = qty * parseFloat(product.price || 0);
-            total += subtotal;
+            total += subtotal; //Gesamtpreis wird hier berechnet
 
             container.innerHTML += `
                 <div class="col-md-4 mb-4" data-id="${product.id}">
@@ -71,8 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>`;
         });
 
+        // Zeigt den Gesamtpreis
         totalElement.textContent = total.toFixed(2).replace(".", ",") + " €";
-        updateCartCount(); // zentral
+        updateCartCount(); // Zähler aktualisieren
     }
 
     function loadCartDisplay() {
@@ -88,12 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(apiPath, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ cart: cart })
+            body: JSON.stringify({ cart: cart }) // Sendet den aktuellen Warenkorb mit id und qty als JSON an das Backend
         })
         .then(res => res.json())
-        .then(products => {
-            const existingIds = products.map(p => p.id);
-            const originalLength = cart.length;
+        .then(products => { //Hier werden veraltete Produkte aus dem localStorage entfernt, beispielsweise
+        //wenn ein Produkt aus der DB gelöscht wurde, aber im localStorage es immernoch gespeichert ist, muss es entfernt werden
+            const existingIds = products.map(p => p.id); // DB
+            const originalLength = cart.length; // LocalStorage
 
             cart = cart.filter(item => existingIds.includes(item.id));
             if (cart.length !== originalLength) {
@@ -110,14 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadCartDisplay();
 
+    // Im Warenkorb die Menge (qty) erhöhen
+    // Wenn irgendein Element im cartItems Container geklickt wird, wird der Code darunter ausgelöst
     container.addEventListener("click", function (e) {
-        const id = parseInt(e.target.dataset.id);
-        if (!id) return;
+        const id = parseInt(e.target.dataset.id); // ID lesen vom geklickten Element
+        if (!id) return; // Wenn keine gültige ID, dann abbrechen
 
-        let item = cart.find(p => p.id === id);
+        let item = cart.find(p => p.id === id); // Passende Artikel im localStorage finden
 
         if (e.target.classList.contains("quantity-increase")) {
-            if (item) item.qty += 1;
+            if (item) item.qty += 1; //Buttons oben im innerHTML
         }
 
         if (e.target.classList.contains("quantity-decrease")) {
@@ -128,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cart = cart.filter(p => p.id !== id);
         }
 
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart)); // Speichert den aktualisierten Warenkorb im LocalStorage (Browser)
         loadCartDisplay();
         syncCartToDatabaseIfLoggedIn();
     });

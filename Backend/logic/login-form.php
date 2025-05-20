@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $role;
             $_SESSION['just_logged_in'] = true;
 
+            // Mit setcookie falls die Bedinungen passen, den Benutzernamen und Passwort 30 Tage lang merken
             if (isset($_POST['remember'])) {
                 setcookie('remembered_user', $identifier, time() + (86400 * 30), "/");
                 setcookie('remembered_pass', base64_encode($password), time() + (86400 * 30), "/");

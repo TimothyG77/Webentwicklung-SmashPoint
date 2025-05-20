@@ -7,10 +7,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 require_once '../../Backend/config/dbaccess.php';
 
+// Die Bilder aus der DB holen
 $stmt = $conn->prepare("SELECT ID, product_name, product_description, price, product_picture FROM produkte");
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Die Produkte im Array speichern und unten im HTML ausprinten
 $products = [];
 while ($row = $result->fetch_assoc()) {
     $products[] = $row;

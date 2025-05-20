@@ -49,6 +49,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                         <option value="Taschen">Taschen</option>
                     </select>
                 </div>
+                <!--Bild hochladen mit type=file-->
                 <div class="mb-3">
                     <label for="product_picture" class="form-label">Bild hochladen</label>
                     <input type="file" class="form-control" name="product_picture" accept="image/*" required>

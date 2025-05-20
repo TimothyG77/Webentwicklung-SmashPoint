@@ -8,7 +8,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         const form = document.getElementById("editProductForm");
-        const formData = new FormData(form);
+        const formData = new FormData(form); // Ist der form-Tag mit den Eingaben in product-edit.php
 
         fetch(apiPath, { 
             method: "POST",

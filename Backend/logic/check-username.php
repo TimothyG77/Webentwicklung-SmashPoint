@@ -8,7 +8,7 @@ if (isset($_POST['benutzername'])) {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
-    echo $stmt->num_rows > 0 ? "taken" : "free";
+    echo $stmt->num_rows > 0 ? "taken" : "free"; // Hier werden die Werte zurückgegeben
     $stmt->close();
     $conn->close();
 }

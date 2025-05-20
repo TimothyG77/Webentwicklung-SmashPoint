@@ -12,6 +12,7 @@ session_start();
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
+        //Globale Variable
         window.isUserLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
     </script>
 </head>
@@ -44,7 +45,7 @@ session_start();
         if (window.isUserLoggedIn) {
             loadCartFromDatabase();
         } else {
-            updateCartCount(); // Holt Anzahl + zeigt Button (neu!)
+            updateCartCount(); // Holt Anzahl + zeigt Button
         }
     });
 </script>

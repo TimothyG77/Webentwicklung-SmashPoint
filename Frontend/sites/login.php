@@ -30,6 +30,8 @@ if (isset($_GET['login']) && $_GET['login'] == "disabled") {
             <form action="../../Backend/logic/login-form.php" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Benutzername oder E-Mail Adresse</label>
+                    <!--SESSION disabled user wird gesetzt wenn der Benutzer deaktiviert isset
+                    und $_COOKIE wird gesetzt, wenn der Benutzer "Login merken" ausgewählt hat-->
                     <input type="text" class="form-control" id="username" name="username"
                            value="<?= htmlspecialchars($_SESSION['disabled_user'] ?? ($_COOKIE['remembered_user'] ?? '')) ?>"
                            required>
@@ -45,6 +47,7 @@ if (isset($_GET['login']) && $_GET['login'] == "disabled") {
                     </div>
                 </div>
 
+                <!--Der Wert remembered_user kommt vom Backend - login-form.php-->
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember"
                         <?= isset($_COOKIE['remembered_user']) ? 'checked' : '' ?>>

@@ -8,6 +8,7 @@ $(document).ready(function () {
         const card = $(this).closest("[data-id]");
         const productId = card.data("id");
 
+        // Nach dem Klick auf dem Button kommt ein Bestätigungsfenster mit confirm
         if (confirm("Willst du dieses Produkt wirklich löschen?")) {
             $.ajax({
                 url: apiPath, // apiPath verwenden

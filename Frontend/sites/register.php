@@ -25,7 +25,7 @@ session_start();
             <h2 class="text-center">Registrierung</h2>
             <form id="registerForm">
                 
-                <!-- Anrede -->
+                <!-- Anrede und alle anderen Dateneingaben -->
                 <div class="mb-3">
                     <label for="anrede" class="form-label">Anrede</label>
                     <select class="form-select" id="anrede" name="anrede" required>

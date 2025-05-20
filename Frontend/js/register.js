@@ -2,11 +2,11 @@
 
 $(document).ready(function () {
     //API-Paths als Konstanten oben definieren
-    const checkUsernameApiPath = "../../Backend/logic/check-username.php";
-    const checkEmailApiPath = "../../Backend/logic/check-email.php";
+    const checkUsernameApiPath = "../../Backend/logic/check-username.php"; // Für Live Username Überpüfung in der DB
+    const checkEmailApiPath = "../../Backend/logic/check-email.php"; // Für Live-Email Überprüfung in der DB
     const registerApiPath = "../../Backend/logic/register-form.php";
 
-    // Passwort anzeigen/ausblenden – erstes Feld
+    // Passwort anzeigen/ausblenden, ist das erste Feld
     $("#togglePassword").click(function () {
         const passwordField = $("#password");
         const type = passwordField.attr("type") === "password" ? "text" : "password";
@@ -14,7 +14,7 @@ $(document).ready(function () {
         $(this).text(type === "password" ? "👁" : "🔒");
     });
 
-    // Passwort anzeigen/ausblenden – Bestätigungsfeld
+    // Passwort anzeigen/ausblenden ist das zweite Feld -> Bestätigungsfeld
     $("#toggleConfirmPassword").click(function () {
         const confirmField = $("#confirm_password");
         const type = confirmField.attr("type") === "password" ? "text" : "password";
@@ -48,7 +48,7 @@ $(document).ready(function () {
             method: "POST",
             data: { benutzername: username },
             success: function (response) {
-                if (response === "taken") {
+                if (response === "taken") { // Vom Backend die Antwort taken
                     $("#username-check").text("Benutzername ist bereits vergeben.")
                         .removeClass("text-success").addClass("text-danger");
                     $("#benutzername").addClass("is-invalid").removeClass("is-valid");
@@ -77,7 +77,7 @@ $(document).ready(function () {
             return;
         }
 
-        if (hasValidFormat && hasValidEnding && hasValidProvider) {
+        if (hasValidFormat && hasValidEnding && hasValidProvider) { // Wenn alle Email-Formate passen
             $.ajax({
                 url: checkEmailApiPath,
                 method: "POST",

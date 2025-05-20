@@ -24,7 +24,7 @@ if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'admin') {
 <div class="container mt-5">
     <h2 class="mb-4 text-center fw-bold">Gutscheine verwalten</h2>
 
-    <!-- Feedback -->
+    
     <div id="feedback" class="alert d-none text-center"></div>
 
     <!-- Button zum Generieren -->

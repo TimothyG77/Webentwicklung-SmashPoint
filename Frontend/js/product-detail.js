@@ -4,7 +4,7 @@ $(document).ready(function () {
     const apiPath = "../../Backend/logic/product-detail-form.php";
     const container = $("#productDetailContainer");
 
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search); // Liest aus de URL die ID
     const productId = urlParams.get('id');
 
     if (!productId) {
@@ -22,7 +22,7 @@ $(document).ready(function () {
                 return;
             }
 
-        
+            // Hier werden dann die Produktdetails ausgeprintet nach einem erfolgreichen AJAX Call.
             container.html(`
                 <div class="row">
                     <div class="col-md-6">

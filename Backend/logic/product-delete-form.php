@@ -3,6 +3,7 @@
 header('Content-Type: application/json');
 session_start();
 
+// Zugriffsschutz
 if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
     echo json_encode(['success' => false, 'message' => 'Ungültige Anfragemethode.']);
     exit;
@@ -15,15 +16,17 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 require_once '../config/dbaccess.php';
 
+// Liest die JSON Daten
 $data = json_decode(file_get_contents("php://input"), true);
 $productId = $data['id'] ?? null;
 
+// Sicherheitsmaßnahme wenn ein Produkt keine ID zugewiesen ist
 if (!$productId) {
     echo json_encode(['success' => false, 'message' => 'Produkt-ID fehlt.']);
     exit;
 }
 
-// Produktbild vorher löschen
+// Produktbild vorher löschen in unserem Datenverzeichnis mit unlink
 $stmt = $conn->prepare("SELECT product_picture FROM produkte WHERE ID = ?");
 $stmt->bind_param("i", $productId);
 $stmt->execute();

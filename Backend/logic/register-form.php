@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 1); // Ist für das Debuggen i PHP, aktiviert die Anzeige von Laufzeit-Fehlern im Browser
+ini_set('display_startup_errors', 1); // Anzeige von Fehlern beim Start von PHP
+error_reporting(E_ALL); // Zeigt alle Arten vonn Fehlern an
 
 header('Content-Type: application/json');
 
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role = 'user';
     $status = 'aktiv';
 
+    // Wenn beide Passworteingaben nicht übereinstimmen
     if ($password !== $confirm) {
         echo json_encode(['success' => false, 'message' => 'Passwörter stimmen nicht überein.']);
         exit;
@@ -49,16 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $checkUser->close();
 
+    
+    // Passwörter werden gehasht
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+    // Daten werden in die Datnebank eingetragen mit INSERT
     $stmt = $conn->prepare("INSERT INTO User (salutation, firstname, lastname, address, postal_code, city, email, username, password, role, status)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssssss", $salutation, $firstname, $lastname, $address, $postal_code, $city, $email, $username, $hashedPassword, $role, $status);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute()) { // Der Username sowie die User-ID werden in die SESSION Variable gespeichert
         $_SESSION['user'] = $username;
         $_SESSION['user_id'] = $stmt->insert_id;
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true]); // Success Antowrt hier
     } else {
         echo json_encode(['success' => false, 'message' => 'Fehler beim Speichern: ' . $stmt->error]);
     }

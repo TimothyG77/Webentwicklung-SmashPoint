@@ -1,3 +1,4 @@
+<!--Footer eingebunden in jedem Frontend File-->
 <footer class="bg-dark text-light py-3 mt-5">
     <div class="container text-center">
         <p>&copy; <?php echo date("Y"); ?> SmashPoint. Alle Rechte vorbehalten.</p>

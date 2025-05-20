@@ -12,6 +12,8 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     exit;
 }
 
+// Datenbankabfrage um Informationen der jeweiligen Produkt-ID zu holen
+
 $productId = (int) $_GET['id'];
 
 $stmt = $conn->prepare("SELECT ID AS id, product_name, product_description, price, product_picture FROM produkte WHERE ID = ?");

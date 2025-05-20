@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$rawData = file_get_contents("php://input");
+$rawData = file_get_contents("php://input"); 
 $data = json_decode($rawData, true);
 if (!$data) {
     echo json_encode(['success' => false, 'message' => 'Ungültige JSON-Daten.']);

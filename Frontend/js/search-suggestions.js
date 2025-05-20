@@ -21,16 +21,16 @@ $(function () {
             url: apiPath + "?term=" + encodeURIComponent(query),
             dataType: "json",
             success: function (data) {
-                resultList.empty();
+                resultList.empty();  //Die alte Liste wird gelöscht, neue Ergebnisse kommen rein
 
                 if (data.length === 0) {
                     resultList.append(`<li class="list-group-item text-muted">Keine Ergebnisse</li>`);
                 } else {
-                    data.forEach(product => {
+                    data.forEach(product => { //Von der Datenbank werden die matched Produkte als Liste angezeigt.
                         resultList.append(`
                             <li class="list-group-item">
                                 <a href="product-detail.php?id=${product.ID}" class="text-decoration-none text-dark">
-                                    ${product.product_name}
+                                    ${product.product_name} 
                                 </a>
                             </li>
                         `);
@@ -45,7 +45,7 @@ $(function () {
         });
     });
 
-    // Klick außerhalb entfernt Liste
+    // Klick außerhalb entfernt Liste unter Suchleiste
     $(document).on("click", function (e) {
         if (!$(e.target).closest("#productSearch, #searchResults").length) {
             resultList.addClass("d-none");

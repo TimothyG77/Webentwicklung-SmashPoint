@@ -1,10 +1,12 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    session_start(); //PHP greift auf die Benutzersitzung zu, um zu prüfen, ob ein Nutzer eingeloggt ist.
 }
 ?>
+
 <script>
     window.isUserLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+    //Brauchen wir um mit der Tabelle cart_items zu arbeiten.
 </script>
 
 <!DOCTYPE html>
@@ -66,6 +68,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <script src="../js/cart-utils.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", updateCartCount);
+    //Sobald mit DOM die Seite geladen wird, wird die Funktion updateCartCount.
 </script>
 
 <!-- Suchvorschläge -->

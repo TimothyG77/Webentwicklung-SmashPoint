@@ -33,9 +33,10 @@ $(document).ready(function () {
         $(this).toggleClass("is-valid", isValid);
     });
 
-    // Bei Absenden -> Modal öffnen
+    // Bei Absenden -> Modal wird geöffnet
     $("#profileForm").on("submit", function (e) {
         e.preventDefault();
+        // Verhindert das Standardverhalten des Browsers für bestimmte Evente (Links öffnen, Formulare abschicken)
 
         formData = {
             salutation: $("select[name='salutation']").val(),

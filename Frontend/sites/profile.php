@@ -46,6 +46,7 @@ $stmt->close();
             </select>
         </div>
 
+        <!--Registrierte Profildaten werden aus der Datenbank abgerufen und hier im Frontend gezeigt-->
         <div class="mb-3"><label class="form-label">Vorname</label><input type="text" name="firstname" value="<?= htmlspecialchars($firstname) ?>" class="form-control" required></div>
         <div class="mb-3"><label class="form-label">Nachname</label><input type="text" name="lastname" value="<?= htmlspecialchars($lastname) ?>" class="form-control" required></div>
         <div class="mb-3"><label class="form-label">Adresse</label><input type="text" name="address" value="<?= htmlspecialchars($address) ?>" class="form-control" required></div>

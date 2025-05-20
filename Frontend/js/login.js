@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    //Passwort anzeigen/ausblenden
+    //Passwort anzeigen und ausblenden
     $("#togglePassword").click(function () {
         const passwordField = $("#password");
         const type = passwordField.attr("type") === "password" ? "text" : "password";

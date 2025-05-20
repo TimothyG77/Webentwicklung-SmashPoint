@@ -20,7 +20,7 @@ $(function () {
             dataType: "json",
             data: JSON.stringify({ code }),
             success: function (res) {
-                if (res.valid && typeof res.value === "number") {
+                if (res.valid && typeof res.value === "number") { 
                     const discounted = Math.max(originalTotal - (originalTotal * (res.value / 100)), 0);
                     callback(discounted, res.value);
                 } else {
@@ -49,6 +49,8 @@ $(function () {
                 products = result;
                 let html = "";
                 originalTotal = 0;
+
+                // Zwischensumme sowie Gesamtsumme berechnen und anzeigen
 
                 products.forEach(product => {
                     const item = cart.find(p => p.id === product.id);
@@ -80,15 +82,15 @@ $(function () {
     }
 
     $("#applyVoucherBtn").on("click", function () {
-        const code = $("#voucherCode").val().trim();
+        const code = $("#voucherCode").val().trim(); //Liest das Eingabefeld vom Gutschein
         if (!code) return;
 
         calculateTotalWithDiscount(code, function (discountedTotal, percentage) {
-            if (percentage > 0) {
+            if (percentage > 0) { // Wenn der Code gültig ist, dann wird der Rabatt angezeigt und gespeichert
                 updateTotalDisplay(discountedTotal);
-                appliedVoucher = code;
+                appliedVoucher = code; 
                 alert("Gutschein angewendet: -" + percentage + "%");
-            } else {
+            } else { // Wenn der Code ungültig ist, wird eine Warnung gegeben und der Preis zurückgesetzt
                 alert("Ungültiger Gutschein.");
                 appliedVoucher = null;
                 updateTotalDisplay(originalTotal);

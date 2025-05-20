@@ -22,8 +22,8 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 
         <?php if ($isAdmin): ?>
             <div class="d-flex gap-2">
-                <a href="product-upload.php" class="btn btn-outline-warning">Produkte hochladen</a>
-                <a href="product-delete.php" class="btn btn-outline-danger">Produkte löschen</a>
+                <a href="product-upload.php" class="btn btn-outline-dark">Produkte hochladen</a>
+                <a href="product-delete.php" class="btn btn-outline-dark">Produkte löschen</a>
             </div>
         <?php endif; ?>
     </div>
@@ -49,6 +49,6 @@ $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 <!-- SCRIPTS -->
 <script src="../js/products.js"></script>
 <script src="../js/cart-utils.js"></script>
-<script src="../js/product-link.js"></script> <!-- NEU für Klick auf Bild/Name -->
+<script src="../js/product-link.js"></script> 
 </body>
 </html>

@@ -57,6 +57,9 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
             </tr>
         </thead>
         <tbody>
+        <!--Wenn ein User den Status inaktiv hat in der DB, dann wird die Tabelle leicht rot markiert
+        und stopPropagation() ist nützlich, damit ich auch nur den Button ?Aktivieren?
+        oder deaktivieren klicke und nicht auch die ganze Tabelle-->
         <?php while ($row = $result->fetch_assoc()): ?>
             <tr class="user-row <?= $row['status'] === 'inaktiv' ? 'table-danger' : '' ?>" data-id="<?= $row['ID'] ?>" style="cursor: pointer;">
                 <td><?= $row['ID'] ?></td>
@@ -69,7 +72,7 @@ $result = $conn->query("SELECT ID, firstname, lastname, email, username, role, s
                     <?php if ($row['ID'] != $userID): ?>
                         <button 
                             class="btn btn-sm toggle-status-btn <?= $row['status'] === 'aktiv' ? 'btn-danger' : 'btn-success' ?>"
-                            data-id="<?= $row['ID'] ?>"
+                            data-id="<?= $row['ID'] ?>" 
                             data-status="<?= $row['status'] ?>"
                             onclick="event.stopPropagation();">
                             <?= $row['status'] === 'aktiv' ? 'Deaktivieren' : 'Aktivieren' ?>

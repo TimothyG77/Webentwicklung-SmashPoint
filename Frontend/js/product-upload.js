@@ -7,7 +7,7 @@ $(document).ready(function () {
     $("#productUploadForm").on("submit", function (e) {
         e.preventDefault();
 
-        const formData = new FormData(this);
+        const formData = new FormData(this); // Sind die Daten vom Form-Tag im HTML
 
         $.ajax({
             url: apiPath, // apiPath verwenden

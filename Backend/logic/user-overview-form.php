@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-// Nur wenn ?toggle gesetzt ist, wird die Aktion ausgeführt
+// Nur wenn ?toggle gesetzt ist, wird die Aktion ausgeführt -> Wert aus der URL holen
 if (!isset($_GET['toggle'])) {
     echo json_encode(['success' => false, 'message' => 'Ungültige Anfrage.']);
     exit;

@@ -6,7 +6,7 @@ $(function () {
     const button = $("#generateVoucherBtn");
 
     function loadVouchers() {
-        $.ajax({
+        $.ajax({ // Gutscheine laden aus der Datenbank
             url: apiPath,
             method: "GET",
             dataType: "json",
@@ -47,7 +47,7 @@ $(function () {
 
     // Gutschein generieren
     button.on("click", function () {
-        $.ajax({
+        $.ajax({ 
             url: apiPath,
             method: "POST",
             contentType: "application/json",

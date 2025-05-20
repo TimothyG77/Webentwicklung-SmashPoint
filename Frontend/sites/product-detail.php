@@ -18,7 +18,8 @@ if (session_status() == PHP_SESSION_NONE) {
 <?php include 'header.php'; ?>
 
 <div class="container mt-5" id="productDetailContainer">
-    <!-- Hier werden die Produktdetails per AJAX eingefügt -->
+    <!-- Hier werden die Produktdetails per AJAX eingefügt
+     Die id productDetailContainer wird verwendet für product-detail.js-->
     <div class="text-center">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Laden...</span>

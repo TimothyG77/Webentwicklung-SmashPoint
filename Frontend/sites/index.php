@@ -9,7 +9,7 @@ $products = [];
 while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
-$chunks = array_chunk($products, 3);
+$chunks = array_chunk($products, 3); // Die Produkte unterteilen in Gruppen zu je 3 Stück.
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +41,8 @@ if (isset($_GET['login']) && $_GET['login'] === 'success' && isset($_SESSION['us
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner">
             <?php foreach ($chunks as $index => $chunk): ?>
-                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+            <!--Markiert das erste Element als aktiv, damit Karussel startet.-->
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>"> 
                     <div class="row">
                         <?php foreach ($chunk as $product): ?>
                             <div class="col-md-4 mb-4">
@@ -83,13 +84,14 @@ if (isset($_GET['login']) && $_GET['login'] === 'success' && isset($_SESSION['us
 
 <script>
 $(document).ready(function () {
-    $(document).on("click", ".add-to-cart-btn", function () {
+    $(document).on("click", ".add-to-cart-btn", function () { // Gehört zum Button weiter oben 
+        // Sobald ein Button "In den Warenkorb" geklickt wird, wird die Produkt-ID geholt und die Funktion addToCart() gerufen.
         const productId = Number($(this).data("id"));
         addToCart(productId);
     });
 
     if (window.isUserLoggedIn) {
-        loadCartFromDatabase(); // beim Seitenladen aus DB
+        loadCartFromDatabase(); // beim Seitenladen aus DB mit AJAX in cart-utils.js
     } else {
         updateCartCount(); // nur localStorage (Gast)
     }
