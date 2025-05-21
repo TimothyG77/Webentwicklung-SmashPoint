@@ -2,6 +2,7 @@
 
 $(function () {
     const apiPath = "../../Backend/logic/order-delete-form.php";
+    // Eine Alert-Box für Rückmeldungen an den Admin
     const feedback = $("#feedbackMessage");
 
     // Klick auf Löschen
@@ -18,7 +19,7 @@ $(function () {
             dataType: "json",
             data: JSON.stringify({ order_id: orderId }),
             success: function (res) {
-                if (res.success) {
+                if (res.success) { // Wenn true von order-delete-form.php dann wird der COde ausgeführt
                     showFeedback("Bestellung erfolgreich gelöscht.", "success");
                     row.remove();
                 } else {

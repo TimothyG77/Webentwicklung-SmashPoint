@@ -20,6 +20,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
     <div id="checkoutItems" class="row mb-4"></div>
 
+    <!--Das Gutscheinfeld-->
     <div class="mb-3">
         <label for="voucherCode" class="form-label">Gutscheincode (optional):</label>
         <div class="input-group">
@@ -28,6 +29,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         </div>
     </div>
 
+    <!--Die Gesamtsumme-->
     <div class="text-end fw-bold fs-5 mb-4">
         Gesamtbetrag: <span id="checkoutTotal">0,00 €</span>
     </div>

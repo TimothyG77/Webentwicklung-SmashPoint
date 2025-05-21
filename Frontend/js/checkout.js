@@ -2,16 +2,22 @@
 
 $(function () {
     const apiPath = "../../Backend/logic/checkout-form.php";
+    // Der Warenkorb wird aus localStorage gelesen
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Ein Array mit nur den Produkt-IDs
     const cartIds = cart.map(p => p.id);
     let products = [];
     let originalTotal = 0;
+    // Brauchen wir fürs Einlösen des Gutscheins
     let appliedVoucher = null;
 
+    // Die Gesamtsumme wird aktualisert
     function updateTotalDisplay(total) {
         $("#checkoutTotal").text(total.toFixed(2).replace(".", ",") + " €");
     }
 
+    // Wenn der AJAX Call erfolgreich war, wird der neue Gesamtbetrag mit Gutscheineinlösung berechnet
+    // callback wird aufgerufen mit dem rabattierten Wert
     function calculateTotalWithDiscount(code, callback) {
         $.ajax({
             url: apiPath + "?validateVoucher=1",
@@ -34,6 +40,7 @@ $(function () {
     }
 
     function loadProducts() {
+        // Überprüfen ob überaupt Produkte im Warenkorb sind
         if (cart.length === 0) {
             $("#checkoutItems").html("<div class='alert alert-info'>Keine Produkte im Warenkorb.</div>");
             return;
@@ -51,7 +58,7 @@ $(function () {
                 originalTotal = 0;
 
                 // Zwischensumme sowie Gesamtsumme berechnen und anzeigen
-
+                // Die Produkte werden ausgeprintet
                 products.forEach(product => {
                     const item = cart.find(p => p.id === product.id);
                     const qty = item ? item.qty : 1;
@@ -81,6 +88,7 @@ $(function () {
         });
     }
 
+    // Der Wert vom Gutschein wird aus dem Eingabefeld gelesen
     $("#applyVoucherBtn").on("click", function () {
         const code = $("#voucherCode").val().trim(); //Liest das Eingabefeld vom Gutschein
         if (!code) return;
@@ -98,6 +106,7 @@ $(function () {
         });
     });
 
+    // Hier wird der gesamte Warenkorb inklusive Gutschein an das Backend geschickt
     $("#placeOrderBtn").on("click", function () {
         $.ajax({
             type: "POST",
@@ -108,7 +117,9 @@ $(function () {
             success: function (response) {
                 if (response.success) {
                     alert("Bestellung erfolgreich!");
+                    // Wenn erfolgreich wird der localStorage gelöscht
                     localStorage.removeItem("cart");
+                    // Und der Warenkorbzähler im header wird aktualisiert
                     updateCartCount();
                     setTimeout(() => window.location.href = "index.php", 300);
                 } else {

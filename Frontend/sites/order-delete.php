@@ -2,6 +2,7 @@
 session_start();
 require_once '../../Backend/config/dbaccess.php';
 
+// Wenn man auf eine Bestellung eines anderen Users löschen will, da wo der Button Details und Löschen ist
 // Zugriff prüfen
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || !isset($_GET['user_id'])) {
     header("Location: login.php");

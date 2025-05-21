@@ -24,13 +24,13 @@ if (!$orderID) {
     exit;
 }
 
-//Erst: Positionen aus order_items löschen
+//Zuerst Positionen aus order_items löschen
 $stmt = $conn->prepare("DELETE FROM order_items WHERE order_id = ?");
 $stmt->bind_param("i", $orderID);
 $stmt->execute();
 $stmt->close();
 
-//Dann: Bestellung aus orders löschen
+//Dann Bestellung aus orders löschen
 $stmt = $conn->prepare("DELETE FROM orders WHERE order_id = ?");
 $stmt->bind_param("i", $orderID);
 

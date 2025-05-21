@@ -1,4 +1,6 @@
 <?php
+// Ist die Datei wo alle Bestellungen gezeigt werden als User
+// Zugriffskontrolle -> Zur Sicherheit
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");

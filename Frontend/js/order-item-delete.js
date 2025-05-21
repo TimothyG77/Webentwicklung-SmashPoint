@@ -2,12 +2,15 @@
 
 $(function () {
     const apiPath = "../../Backend/logic/order-item-delete-form.php";
+    // Die Id wird von order-item-delete.php geholt
     const feedback = $("#feedbackMessage");
 
+    // Beim Klick auf den Button wird der Code darunter ausgeführt -> delete.item-btn von order-item-delete.php
     $(document).on("click", ".delete-item-btn", function () {
         const row = $(this).closest("tr");
         const itemId = row.data("id");
 
+        // Fenster tritt auf um einmal sicherzugehen
         if (!confirm(`Produktposition #${itemId} wirklich löschen?`)) return;
 
         $.ajax({

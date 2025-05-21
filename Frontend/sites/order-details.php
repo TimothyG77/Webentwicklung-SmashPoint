@@ -1,10 +1,14 @@
 <?php
 session_start();
+// Zugriffsrecht
 if (!isset($_SESSION['user_id']) || !isset($_GET['order_id'])) {
     header("Location: login.php");
     exit;
 }
 
+// Wenn man die Bestelldetails öffnet von der Bestellübersicht als User
+
+// Holt die order-id aus der URL und wandelt diese in einen Integer um
 $orderID = intval($_GET['order_id']);
 ?>
 
@@ -43,7 +47,7 @@ $orderID = intval($_GET['order_id']);
 </div>
 
 <script>
-    const ORDER_ID = <?= $orderID ?>;
+    const ORDER_ID = <?= $orderID ?>; // Die Variable brauchen wir für den AJAX Call in order-details.js
 </script>
 <script src="../js/order-details.js"></script>
 <?php include('footer.php'); ?>

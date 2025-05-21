@@ -2,13 +2,17 @@
 session_start();
 require_once '../../Backend/config/dbaccess.php';
 
+// Button -> Details, ist das bei der Benutzerübersicht, wenn man auf eine Bestellung eines anderen Users klickt als Admin
+// Zugriffsschutz
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin' || !isset($_GET['order_id'])) {
     header("Location: login.php");
     exit;
 }
 
+// Die orderId wird aus der URL geholt, Verbindung zu order-history.js
 $orderId = intval($_GET['order_id']);
 
+// Die Daten werden aus der Tabelle order_items geholt und in $result gespeichert
 $stmt = $conn->prepare("
     SELECT 
         oi.item_id, 
@@ -51,6 +55,7 @@ $result = $stmt->get_result();
             </tr>
         </thead>
         <tbody>
+            <!--Die einzelnen Produkte einer Bestellung werden als Tabelle ausgeprintet-->
             <?php while ($item = $result->fetch_assoc()): ?>
                 <tr data-id="<?= $item['item_id'] ?>">
                     <td>

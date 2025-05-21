@@ -3,7 +3,7 @@ session_start();
 header("Content-Type: application/json");
 require_once '../config/dbaccess.php';
 
-// Zugriff prüfen
+// Zugriff prüfen -> Für Sicherheit
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     echo json_encode(['success' => false, 'message' => 'Nicht autorisiert.']);
     exit;
@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
     exit;
 }
 
+// Die eingegebenen Daten werden gelesen
 $data = json_decode(file_get_contents("php://input"), true);
+// Man holt sich die itemID der zu löschenden Bestellposition
 $itemID = intval($data['item_id'] ?? 0);
 
 if (!$itemID) {
@@ -22,7 +24,7 @@ if (!$itemID) {
     exit;
 }
 
-// 🔍 Hole zugehörige order_id
+// Hole zugehörige order_id
 $stmt = $conn->prepare("SELECT order_id FROM order_items WHERE item_id = ?");
 $stmt->bind_param("i", $itemID);
 $stmt->execute();
@@ -62,6 +64,7 @@ $stmt->bind_param("di", $newTotal, $orderID);
 $stmt->execute();
 $stmt->close();
 
+// Hier ist die success-Message wenn alles erfolgreich war
 echo json_encode(['success' => true, 'new_total' => $newTotal]);
 $conn->close();
 exit;

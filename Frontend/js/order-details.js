@@ -5,14 +5,15 @@ $(function () {
 
     $.ajax({
         type: "GET",
-        url: apiPath + "?order_id=" + ORDER_ID,
+        url: apiPath + "?order_id=" + ORDER_ID, // ORDER_ID von order-details.php
         dataType: "json",
         success: function (items) {
             if (!items.length) {
                 $("#orderDetailsBody").html(`<tr><td colspan="4" class="text-muted">Keine Details gefunden.</td></tr>`);
                 return;
             }
-
+            
+            // Für jedes Produkt wird eine Zeile erstellt 
             let html = "";
             items.forEach(item => {
                 const total = item.quantity * item.price_each;
@@ -30,6 +31,7 @@ $(function () {
                     </tr>`;
             });
 
+            // Die generierten Zeilen von vorher, werden in die Tabelle eingefügt
             $("#orderDetailsBody").html(html);
         },
         error: function (xhr) {

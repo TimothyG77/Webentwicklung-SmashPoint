@@ -5,17 +5,22 @@ $(function () {
 
     $.ajax({
         type: "GET",
-        url: `${apiPath}?order_id=${ORDER_ID}`,
+        url: `${apiPath}?order_id=${ORDER_ID}`, // OrderID wird von order-history.js geholt
         dataType: "json",
         success: function (data) {
             if (!data.success) {
+                // ID von invoice-view.php
                 $("#invoiceContent").html(`<div class="alert alert-danger">${data.message}</div>`);
                 return;
             }
-
+            
+            // Bestell- und Kundendaten
             const o = data.order;
+
+            // Produktpositionen
             const items = data.items;
 
+            // Die Ausgabe der Rechnung
             let html = `
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2>Rechnung</h2>
@@ -57,6 +62,7 @@ $(function () {
 
             html += `</tbody></table>`;
 
+            // Hier noch zusätzlich wird der Gutschein sowie Gesamtpreis berechnet sowie ausgeprintet
             if (o.voucher_percent) {
                 const discount = subtotal * (parseFloat(o.voucher_percent) / 100);
                 const total = subtotal - discount;
@@ -68,12 +74,14 @@ $(function () {
                 html += `<p><strong>Gesamtsumme:</strong> ${subtotal.toFixed(2).replace(".", ",")} €</p>`;
             }
 
+            // Unterschriftfeld
             html += `
                 <div class="signature mt-5">
                     <p>___________________________</p>
                     <p class="text-muted">Unterschrift</p>
                 </div>`;
 
+            // Ergebnis einfügen
             $("#invoiceContent").html(html);
         },
         error: function () {

@@ -3,7 +3,7 @@
 $(function () {
     const apiPath = "../../Backend/logic/order-history-form.php";
     const detailPath = "../../Backend/logic/order-details-form.php";
-    const tbody = $("#orderHistoryBody");
+    const tbody = $("#orderHistoryBody"); // Ist die ID von order-history.php
 
     // Alle Bestellungen laden
     $.ajax({
@@ -17,6 +17,7 @@ $(function () {
             }
 
             let html = "";
+            // Button Rechnung bei "Meine Bestellübersicht" führt zu invoice-view.php
             orders.forEach(order => {
                 html += `
                     <tr class="order-row" data-id="${order.order_id}" style="cursor:pointer">
@@ -41,10 +42,12 @@ $(function () {
         }
     });
 
-    
+    // Man kann durch das auf jede Bestellung klicken
     $(document).on("click", ".order-row", function (e) {
         if ($(e.target).closest("a").is("[href*='invoice']")) return;
 
+        // Führt zu order-details.php
+        // Wichtig!!! Hier wird die orderID in die URL gegeben, was wir brauchen für order.details.js
         const orderId = $(this).data("id");
         window.location.href = "order-details.php?order_id=" + orderId;
     });

@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadCartDisplay() {
         cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+        // Nach Bestellung wird der Warenkorbzähler auf 0 gesetzt und diese Bedingung trifft zu
         if (cart.length === 0) {
             container.innerHTML = '<div class="alert alert-info">Keine Produkte gefunden.</div>';
             totalElement.textContent = "0,00 €";
