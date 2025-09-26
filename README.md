@@ -1,13 +1,13 @@
 # Webentwicklung-Gruppe-27
 
-# 🛒 Webshop-Projekt  
+## Webshop-Projekt  
 
-## 📌 Projektbeschreibung  
+## Projektbeschreibung  
 Dieses Projekt ist ein einfacher **Webshop**, der es Nutzern ermöglicht, Produkte anzusehen, in den Warenkorb zu legen und Bestellungen zu verwalten. Der Webshop enthält eine **Benutzerverwaltung**, ein **Admin-Panel** sowie eine **dynamische Produktdarstellung**.  
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 🚀 Funktionen  
+## Funktionen  
 ###  **Für Gäste (nicht registrierte Nutzer)**
 - Produkte durchsuchen und Kategorien filtern  
 - Produktsuche mit Live-Vorschlägen  
@@ -25,7 +25,7 @@ Dieses Projekt ist ein einfacher **Webshop**, der es Nutzern ermöglicht, Produk
 - Kundenverwaltung (Deaktivieren/Aktivieren von Accounts)  
 - Gutscheine erstellen & verwalten  
 
-## ⚙️ Technologien & Tools  
+## Technologien & Tools  
 - **Frontend:** HTML, CSS, JavaScript, Bootstrap  
 - **Backend:** PHP, MySQL, Sessions, Cookies  
 - **Datenbank:** MySQL  
@@ -33,7 +33,7 @@ Dieses Projekt ist ein einfacher **Webshop**, der es Nutzern ermöglicht, Produk
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 🔧 Installation & Einrichtung  
+## Installation & Einrichtung  
 
 ### **Voraussetzungen**  
 Bevor du das Projekt startest, stelle sicher, dass folgende Programme installiert sind:  
